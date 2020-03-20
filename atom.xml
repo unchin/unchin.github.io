@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://unchin.github.io</id>
     <title>用钦</title>
-    <updated>2020-03-20T06:57:51.369Z</updated>
+    <updated>2020-03-20T07:05:22.007Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://unchin.github.io"/>
     <link rel="self" href="https://unchin.github.io/atom.xml"/>
@@ -12,71 +12,71 @@
     <rights>All rights reserved 2020, 用钦</rights>
     <entry>
         <title type="html"><![CDATA[GitLab+Docker  通过 CI/CD 实现自动化部署]]></title>
-        <id>https://unchin.github.io/OBk3QCKqA/</id>
-        <link href="https://unchin.github.io/OBk3QCKqA/">
+        <id>https://unchin.github.io/GitLab+Docker  通过 CI CD 实现自动化部署/</id>
+        <link href="https://unchin.github.io/GitLab+Docker  通过 CI CD 实现自动化部署/">
         </link>
         <updated>2020-03-20T06:50:09.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[docker 部署 springboot]]></title>
-        <id>https://unchin.github.io/mB4f5oiBN/</id>
-        <link href="https://unchin.github.io/mB4f5oiBN/">
+        <id>https://unchin.github.io/docker 部署 springboot/</id>
+        <link href="https://unchin.github.io/docker 部署 springboot/">
         </link>
         <updated>2020-03-20T06:49:57.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[Spring Cloud]]></title>
-        <id>https://unchin.github.io/GeHi2l7y7/</id>
-        <link href="https://unchin.github.io/GeHi2l7y7/">
+        <id>https://unchin.github.io/ Spring Cloud/</id>
+        <link href="https://unchin.github.io/ Spring Cloud/">
         </link>
         <updated>2020-03-20T06:49:43.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[使用Spring-Test对Spring框架进行单元测试]]></title>
-        <id>https://unchin.github.io/4pBtuh6oQ/</id>
-        <link href="https://unchin.github.io/4pBtuh6oQ/">
+        <id>https://unchin.github.io/使用Spring-Test对Spring框架进行单元测试/</id>
+        <link href="https://unchin.github.io/使用Spring-Test对Spring框架进行单元测试/">
         </link>
         <updated>2020-03-20T06:49:20.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[SpringBoot与 Oauth2]]></title>
-        <id>https://unchin.github.io/lGJdKR2R9/</id>
-        <link href="https://unchin.github.io/lGJdKR2R9/">
+        <id>https://unchin.github.io/SpringBoot与 Oauth2/</id>
+        <link href="https://unchin.github.io/SpringBoot与 Oauth2/">
         </link>
         <updated>2020-03-20T06:49:02.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[Java Spring各种注解的理解]]></title>
-        <id>https://unchin.github.io/Ch1XeZjjX/</id>
-        <link href="https://unchin.github.io/Ch1XeZjjX/">
+        <id>https://unchin.github.io/Java Spring各种注解的理解/</id>
+        <link href="https://unchin.github.io/Java Spring各种注解的理解/">
         </link>
         <updated>2020-03-20T06:48:19.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[Mybatis关联查询之一对多XML配置详解]]></title>
-        <id>https://unchin.github.io/xet7oJ4kA/</id>
-        <link href="https://unchin.github.io/xet7oJ4kA/">
+        <id>https://unchin.github.io/Mybatis关联查询之一对多XML配置详解/</id>
+        <link href="https://unchin.github.io/Mybatis关联查询之一对多XML配置详解/">
         </link>
         <updated>2020-03-20T06:47:04.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[MyBatis关联删除之批量删除与级联删除]]></title>
-        <id>https://unchin.github.io/YMJIR-IRD/</id>
-        <link href="https://unchin.github.io/YMJIR-IRD/">
+        <id>https://unchin.github.io/MyBatis关联删除之批量删除与级联删除/</id>
+        <link href="https://unchin.github.io/MyBatis关联删除之批量删除与级联删除/">
         </link>
         <updated>2020-03-20T06:46:39.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[mybatis 中常用到的 SQL 语句]]></title>
-        <id>https://unchin.github.io/Bwj1wCExU/</id>
-        <link href="https://unchin.github.io/Bwj1wCExU/">
+        <id>https://unchin.github.io/mybatis 中常用到的 SQL 语句/</id>
+        <link href="https://unchin.github.io/mybatis 中常用到的 SQL 语句/">
         </link>
         <updated>2020-03-20T06:45:28.000Z</updated>
     </entry>
     <entry>
         <title type="html"><![CDATA[开发规范整理]]></title>
-        <id>https://unchin.github.io/XCr1U4KAV/</id>
-        <link href="https://unchin.github.io/XCr1U4KAV/">
+        <id>https://unchin.github.io/开发规范整理/</id>
+        <link href="https://unchin.github.io/开发规范整理/">
         </link>
         <updated>2020-03-20T06:44:22.000Z</updated>
     </entry>

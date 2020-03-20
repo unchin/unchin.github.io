@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>Hello Gridea | 用钦</title>
+  <title>MyBatis关联结构的数据批量插入方法详解与优化 | 用钦</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://unchin.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://unchin.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="Hello Gridea | 用钦 » Feed" href="https://unchin.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="MyBatis关联结构的数据批量插入方法详解与优化 | 用钦 » Feed" href="https://unchin.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://unchin.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,8 +25,8 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="Hello Gridea"/>
-    <meta property="og:url" content="https://unchin.github.io/hello-gridea/"/>
+    <meta property="og:description" content="MyBatis关联结构的数据批量插入方法详解与优化"/>
+    <meta property="og:url" content="https://unchin.github.io/MyBatis关联结构的数据批量插入方法详解与优化/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="用钦"/>
@@ -80,13 +80,11 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://unchin.github.io/6PS3T4S-O/" class="tag">Gridea</a>
-            
         </span>
-            <h1>Hello Gridea</h1>
+            <h1>MyBatis关联结构的数据批量插入方法详解与优化</h1>
             <span class="meta">
             	Posted on
-              2018-12-12，2 min read
+              2020-03-20，4 min read
             </span>
           </div>
         </div>
@@ -99,29 +97,140 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+          <h2 id="数据基础">数据基础</h2>
+<p>两张表，头行结构。逻辑结构：一对多，一个老师有多个学生。为帮助理解，相当于是一张老师表一张学生表。以下代码中没有用这两张表的字段，以头表行表来替代老师表和学生表，通用性高一些。<br>
+<a href="https://i.loli.net/2018/11/07/5be2ad1af403a.jpg"><img src="https://i.loli.net/2018/11/07/5be2ad1af403a.jpg" alt="1541582063.jpg" loading="lazy"></a><br>
+<a href="https://i.loli.net/2018/11/07/5be2ad1af3a3d.jpg"><img src="https://i.loli.net/2018/11/07/5be2ad1af3a3d.jpg" alt="1541582063(1).jpg" loading="lazy"></a></p>
+<h2 id="问题">问题</h2>
+<p>新增的数据为头行结构数据。<br>
+例如，新增了一个老师和两个学生信息，两个学生都属于这个老师的java班中。<br>
+我们需要将这一条json数据分别插入到老师表和学生表这两个表中。</p>
+<pre><code>[
+  {
+    &quot;className&quot;: &quot;java&quot;,
+    &quot;id&quot;: 6,
+    &quot;name&quot;: &quot;teacherTom&quot;,
+    &quot;students&quot;: [
+      {
+        &quot;className&quot;: &quot;java&quot;,
+        &quot;name&quot;: &quot;steven&quot;,
+        &quot;teacherId&quot;: 6
+      },
+      {
+        &quot;className&quot;: &quot;java&quot;,
+        &quot;name&quot;: &quot;kite&quot;,
+        &quot;teacherId&quot;: 6
+      }
+    ]
+  }
+]
+</code></pre>
+<h2 id="解决方法">解决方法</h2>
+<ol>
+<li>在头表的实体类中需要有一个暂时存放行表数据的字段。</li>
+<li>接收过来的也就是需要插入的一批数据可以从前端来，也可以自己经过处理后放在list容器里，我这里是后者。</li>
+</ol>
+<pre><code>List&lt;addDTO&gt; addDTOS = new ArrayList&lt;&gt;();
+</code></pre>
+<ol start="3">
+<li>然后是批量插入，这个就是普通的mybatis的批量新增。主要说一下这个优化的方法。</li>
+</ol>
+<pre><code>@Override
+    public Map&lt;String, Object&gt; insert(AddDTO addDTO) {
+        Map&lt;String, Object&gt; result = new HashMap&lt;&gt;();
+
+        //查询到的待新增的项
+        List&lt;AddDTO&gt; adds = addMapper.selectOne();
+
+        //取出获取到的数据中的不可重复项的值
+        String code = addDTO.getCode();
+        String name = addDTO.getName();
+
+        //遍历每个编码和名字
+        for (AddDTO add : adds) {
+            //如果从前台输入的值与数据库中的有重复，则新增失败，抛出异常
+            if (code.equals(add.getCode()) || name.equals(add.getName())) {
+                throw new Exception(&quot;error.insert&quot;);
+            }
+        }
+
+        //批量插入到表中
+        int status = 0;
+        int part = (int) Math.ceil(adds.size() / 50);
+        int beginIndex = 0;
+        int endIndex = 0;
+        for (int i = 0; i &lt; part; i++) {
+            beginIndex = part * i;
+            if ((i + 1) == part) {
+                endIndex = adds.size();
+            } else {
+                endIndex = part * (i + 1);
+            }
+            status = status + addMapper.insert(adds.subList(beginIndex, endIndex));
+
+        }
+        result.put(&quot;insert&quot;, status);
+        return result;
+    }
+</code></pre>
+<p>这里这种优化的方法主要是分批操作，我这边是一次新增2260条信息，mybatis一次新增耗时很久，然后本人试过很多种方案，刚开始是想着尽量减少与数据库的交互应该会快一些，但是经过试验，每批控制在50到100之间的耗时是最小的，当然这个原理我还是没有弄清楚。如果有知道这个原理的，求指导！</p>
+<ol start="4">
+<li>xml</li>
+</ol>
+<pre><code>   &lt;insert id=&quot;insert&quot; parameterType=&quot;java.util.List&quot;&gt;
+        INSERT INTO
+        teacher(
+            id,
+            name,
+            className
+        )
+        VALUES
+        &lt;foreach collection=&quot;addDTOS&quot; item=&quot;teacher&quot; index=&quot;index&quot; separator=&quot;,&quot;&gt;
+            (
+            default,
+            #{teacher.name},
+            #{teacher.className}
+            )
+        &lt;/foreach&gt;;
+
+        &lt;if test=&quot;addDTO.student != null and addDTO.student.size != 0&quot;&gt;
+            INSERT INTO
+            student(
+            id,
+            name,
+            className,
+            teacherId
+            )
+        VALUES
+          &lt;foreach collection=&quot;addDTOS&quot; item=&quot;addDTO&quot; index=&quot;index&quot; separator=&quot;,&quot;&gt;
+
+              &lt;foreach collection=&quot;addDTO.student&quot; item=&quot;studentDTO&quot; index=&quot;index&quot; separator=&quot;,&quot;&gt;
+            (
+            default,
+            #{studentDTO.name},
+            #{studentDTO.className},
+            #{studentDTO.teacherId}
+            )
+              &lt;/foreach&gt;
+          &lt;/foreach&gt;
+        &lt;/if&gt;
+    &lt;/insert&gt;
+
+</code></pre>
+<p>这里是两条语句拼接的头行关联结构新增语句。</p>
+<h2 id="总结">总结</h2>
+<p>在做批量新增的时候，要尽可能的多想想该接口在面对数据量大的情况时应该怎么处理。<br>
+在做头行关联结构新增的时候，也可以在mybatis中拼接新增，免去java的拼接。</p>
 
           
+          <p class="next-post">下一篇：
+            <a href="https://unchin.github.io/Java基础知识整理（一）/">
+              <span class="post-title">
+                Java基础知识整理（一）&rarr;
+              </span>
+            </a>
+          </p>
+        
         <div class="comment">
           
         </div>

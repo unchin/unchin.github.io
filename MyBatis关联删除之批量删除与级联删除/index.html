@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>Hello Gridea | 用钦</title>
+  <title>MyBatis关联删除之批量删除与级联删除 | 用钦</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://unchin.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://unchin.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="Hello Gridea | 用钦 » Feed" href="https://unchin.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="MyBatis关联删除之批量删除与级联删除 | 用钦 » Feed" href="https://unchin.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://unchin.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,8 +25,8 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="Hello Gridea"/>
-    <meta property="og:url" content="https://unchin.github.io/hello-gridea/"/>
+    <meta property="og:description" content="MyBatis关联删除之批量删除与级联删除"/>
+    <meta property="og:url" content="https://unchin.github.io/MyBatis关联删除之批量删除与级联删除/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="用钦"/>
@@ -80,13 +80,11 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://unchin.github.io/6PS3T4S-O/" class="tag">Gridea</a>
-            
         </span>
-            <h1>Hello Gridea</h1>
+            <h1>MyBatis关联删除之批量删除与级联删除</h1>
             <span class="meta">
             	Posted on
-              2018-12-12，2 min read
+              2020-03-20，3 min read
             </span>
           </div>
         </div>
@@ -99,29 +97,114 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+          <h1 id="mybatis关联删除之批量删除与级联删除">MyBatis关联删除之批量删除与级联删除</h1>
+<h2 id="数据基础">数据基础</h2>
+<p>两张表，头行结构。逻辑结构：一对多，一个老师有多个学生。为帮助理解，相当于是一张老师表一张学生表。以下代码中没有用这两张表的字段，以头表行表来替代老师表和学生表，通用性高一些。<br>
+<a href="https://i.loli.net/2018/11/07/5be2ad1af403a.jpg"><img src="https://i.loli.net/2018/11/07/5be2ad1af403a.jpg" alt="1541582063.jpg" loading="lazy"></a><br>
+<a href="https://i.loli.net/2018/11/07/5be2ad1af3a3d.jpg"><img src="https://i.loli.net/2018/11/07/5be2ad1af3a3d.jpg" alt="1541582063(1).jpg" loading="lazy"></a></p>
+<h2 id="问题">问题</h2>
+<ol>
+<li>批量删除行表信息，单表删除操作。</li>
+<li>批量删除头表，这里在每删除一条头表内容的时候，就需要相应的取删除它所对应的行表的信息。</li>
+</ol>
+<h2 id="解决方法">解决方法</h2>
+<ol>
+<li>在controller中接收到的，是需要删除的头表的id集合<code>ids</code></li>
+</ol>
+<pre><code>@Permission(permissionLogin = true)
+@ApiOperation(value = &quot;[删除] 批量删除以及级联删除&quot;)
+@RequestMapping(value = &quot;/batchDelete&quot;,method = RequestMethod.DELETE)
+    public ResponseEntity&lt;Map&lt;String,Object&gt;&gt; batchDelete(@RequestBody List&lt;Long&gt; ids) {
+        return Optional.ofNullable(listService.batchDelete(ids))
+                .map(result -&gt; new ResponseEntity&lt;&gt;(result, HttpStatus.OK))
+                .orElseThrow(() -&gt; new HapException(&quot;error.listService.batchDelete&quot;));
+    }
+</code></pre>
+<p>2.先进行行表的删除。</p>
+<ul>
+<li>service实现类中，这里是级联删除的关键，</li>
+</ul>
+<pre><code>@Override
+public Map&lt;String, Object&gt; batchDelete(List&lt;Long&gt; ids) {
+        Map&lt;String, Object&gt; resultMap = new HashMap&lt;&gt;();
+        int status = 0;
+        //级联删除
+        if (!ids.isEmpty()) {
+            status = listMapper.batchDeleteCascadeList(ids);
+        }
+        resultMap.put(&quot;delete.one&quot;, status);
+        //批量删除
+        if (!ids.isEmpty()) {
+            status = listMapper.batchDelete(ids);
+        }
+        resultMap.put(&quot;delete.list&quot;, status);
+        return resultMap;
+    }
+</code></pre>
+<ul>
+<li>行表删除的mapper接口</li>
+</ul>
+<pre><code>    /**
+     * [删除] 级联删除
+     *
+     * @return
+     */
+    int batchDeleteCascadeList(@Param(value = &quot;idList&quot;) List&lt;Long&gt; idList);
+</code></pre>
+<ul>
+<li>行表删除的xml，这里也是关键，<strong>删除行表中 uuid 是接收到的id集合中的项目所对应的的值</strong>，将每个头表项目所对应的行表内容删除。</li>
+</ul>
+<pre><code> &lt;delete id=&quot;batchDeleteCascadeList&quot;&gt;
+        DELETE FROM 
+        one
+        WHERE
+        uuid IN
+        (SELECT uuid FROM list WHERE id IN
+        &lt;foreach item=&quot;id&quot; index=&quot;index&quot; collection=&quot;idList&quot; open=&quot;(&quot; separator=&quot;,&quot; close=&quot;)&quot;&gt;
+            #{id}
+        &lt;/foreach&gt;
+        )
+    &lt;/delete&gt;
+</code></pre>
+<ol start="3">
+<li>进行头表的数据删除</li>
+</ol>
+<ul>
+<li>mapper接口</li>
+</ul>
+<pre><code>    /**
+     * [删除] 根据id批量删除头表信息
+     *
+     * @param idList
+     * @return
+     */
+    int batchDelete(@Param(value = &quot;idList&quot;) List&lt;Long&gt; idList);
+</code></pre>
+<ul>
+<li>xml</li>
+</ul>
+<pre><code>    &lt;delete id=&quot;batchDelete&quot; parameterType=&quot;java.util.List&quot;&gt;
+        delete from 
+        list
+        where id in
+        &lt;foreach collection=&quot;idList&quot; item=&quot;id&quot; open=&quot;(&quot; separator=&quot;,&quot; close=&quot;)&quot;&gt;
+            #{id}
+        &lt;/foreach&gt;
+    &lt;/delete&gt;
+</code></pre>
+<h2 id="总结">总结</h2>
+<p>以上代码中只是截取了部分关键信息，还有一些service接口代码没有贴出来。</p>
+<p>这是使用java的方法拼接实现级联删除。如果有mybatis的拼接或者是其他更高效的方法，求指导！</p>
 
           
+          <p class="next-post">下一篇：
+            <a href="https://unchin.github.io/mybatis 中常用到的 SQL 语句/">
+              <span class="post-title">
+                mybatis 中常用到的 SQL 语句&rarr;
+              </span>
+            </a>
+          </p>
+        
         <div class="comment">
           
         </div>

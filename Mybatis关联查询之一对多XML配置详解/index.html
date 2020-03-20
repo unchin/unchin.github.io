@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>Hello Gridea | 用钦</title>
+  <title>Mybatis关联查询之一对多XML配置详解 | 用钦</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://unchin.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://unchin.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="Hello Gridea | 用钦 » Feed" href="https://unchin.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Mybatis关联查询之一对多XML配置详解 | 用钦 » Feed" href="https://unchin.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://unchin.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,8 +25,8 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
-    <meta property="og:description" content="Hello Gridea"/>
-    <meta property="og:url" content="https://unchin.github.io/hello-gridea/"/>
+    <meta property="og:description" content="Mybatis关联查询之一对多XML配置详解"/>
+    <meta property="og:url" content="https://unchin.github.io/Mybatis关联查询之一对多XML配置详解/"/>
     <meta property="og:locale" content="zh-CN"/>
     <meta property="og:type" content="website"/>
     <meta property="og:site_name" content="用钦"/>
@@ -80,13 +80,11 @@
           <div class="post-heading">
           	<span class="tags">
           	 
-            <a href="https://unchin.github.io/6PS3T4S-O/" class="tag">Gridea</a>
-            
         </span>
-            <h1>Hello Gridea</h1>
+            <h1>Mybatis关联查询之一对多XML配置详解</h1>
             <span class="meta">
             	Posted on
-              2018-12-12，2 min read
+              2020-03-20，4 min read
             </span>
           </div>
         </div>
@@ -99,29 +97,147 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+          <p>最初看的这篇教程https://blog.csdn.net/qq_33561055/article/details/78861131<br>
+但是有些地方没有解释详细，自己研究了一会，决定将之详细化</p>
+<ul>
+<li>首先是有两张表，头行结构。相当于是一张老师表一张学生表。</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="/Mybatis%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2%E4%B9%8B%E4%B8%80%E5%AF%B9%E5%A4%9AXML%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/20181102032513291.png" alt="" loading="lazy"></figure>
+<p><img src="/Mybatis%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2%E4%B9%8B%E4%B8%80%E5%AF%B9%E5%A4%9AXML%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/20181102033056030.png" alt="" loading="lazy"><br>
+逻辑结构就是一个老师有多个学生，我们在查询的时候想要的结果是查出所有的老师的数据以及每一个老师所对应的学生的数据。</p>
+<ul>
+<li>创建实体bean<br>
+头表和行表都需要创建相应的实体类。在头表中需要新增一个字段（表中不存在的），用来存放行表中查出的对应的数据。</li>
+</ul>
+<pre><code>   @VersionAudit
+@ModifyAudit
+@Table(name = &quot;teacher&quot;)
+public class TeacherDTO {
+
+    @Id
+    @GeneratedValue
+    @Column(name = &quot;id&quot;)
+    private Integer id;
+
+    @Column(name = &quot;name&quot;)
+    private String name;
+
+    @Column(name = &quot;class_name&quot;)
+    private String className;
+
+    @Transient
+    private List&lt;StudentDTO&gt; students;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public List&lt;StudentDTO&gt; getStudents() {
+        return students;
+    }
+
+    public void setStudents(List&lt;StudentDTO&gt; students) {
+        this.students = students;
+    }
+}
+
+</code></pre>
+<p>我这里用students来存放 行表 中查询的出的数据。<code>@Transient</code>这个注解表示该实体中定义数据库中没有的字段。</p>
+<ul>
+<li>配置Mapper.xml文件<br>
+在查询了网上资料以及翻阅相关书籍后，总结出mybatis中一对多的方式，其实这个方法的效率是比较高的，所以优先用这个方法，前文中的链接中也有提到这种方法，就是链接中的第二种方法。<br>
+<strong>代码的详解放在代码的注释中</strong></li>
+</ul>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot; &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot; &gt;
+&lt;mapper namespace=&quot;test.mapper.TeacherMapper&quot;&gt;
+
+    &lt;!-- type 头表的返回格式，也就是头表的实体类--&gt;
+    &lt;resultMap id=&quot;teacherMap&quot; type=&quot;test.domain.TeacherDTO&quot;&gt;
+        &lt;id property=&quot;id&quot; column=&quot;id&quot;/&gt;
+        &lt;result column=&quot;name&quot; property=&quot;name&quot;/&gt;
+        &lt;result column=&quot;class_name&quot; property=&quot;className&quot;/&gt;
+        &lt;!-- ofType 行表的返回格式--&gt;
+        &lt;!-- select 行表的sql查询语句的id--&gt;
+        &lt;!--column 头表与行表的连接字段，注意这里用的是下划线，下面用的是驼峰--&gt;
+        &lt;collection property=&quot;students&quot; ofType=&quot;test.domain.StudentDTO&quot; select=&quot;findStudents&quot; column=&quot;id&quot;&gt;
+        &lt;/collection&gt;
+    &lt;/resultMap&gt;
+
+    &lt;!--头表查询语句--&gt;
+    &lt;select id=&quot;findTeacherAndStudent&quot; resultMap=&quot;teacherMap&quot;&gt;
+
+        SELECT
+            id,
+            NAME,
+            class_name
+        FROM
+            `teacher`
+    &lt;/select&gt;
+
+    &lt;!--行表查询语句--&gt;
+    &lt;select id=&quot;findStudents&quot; resultType=&quot;test.domain.StudentDTO&quot;&gt;
+
+        SELECT
+            id,
+            teacher_id,
+            name,
+            class_name
+        FROM
+            `student`
+        WHERE
+            1=1
+--         这里递进来的的参数是驼峰格式
+        AND id = #{id}
+
+    &lt;/select&gt;
+
+&lt;/mapper&gt;
+</code></pre>
+<ul>
+<li>这是mybatis的拼接方式，有时候其实也可以用java的拼接方式，独立出两个查询接口，然后在java中拼接</li>
+</ul>
+<p>这是service实现类中的拼接方式</p>
+<pre><code>public List&lt;TeacherDTO&gt; findTeacherAndStudentByJava(String id) {
+        List&lt;TeacherDTO&gt; result = teacherMapper.findTeacher(id);
+        //遍历头表中查询到的每一条数据
+        for (TeacherDTO teacherDTO : result) {
+            //将行表查询到的数据放在头表中的students字段中
+            teacherDTO.setStudents(teacherMapper.findStudents(teacherDTO.getId()));
+        }
+        return result;
+    }
+</code></pre>
 
           
+          <p class="next-post">下一篇：
+            <a href="https://unchin.github.io/MyBatis关联删除之批量删除与级联删除/">
+              <span class="post-title">
+                MyBatis关联删除之批量删除与级联删除&rarr;
+              </span>
+            </a>
+          </p>
+        
         <div class="comment">
           
         </div>

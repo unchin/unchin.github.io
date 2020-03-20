@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>使用Spring-Test对Spring框架进行单元测试 | 用钦</title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://unchin.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://unchin.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="使用Spring-Test对Spring框架进行单元测试 | 用钦 » Feed" href="https://unchin.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://unchin.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://unchin.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="使用Spring-Test对Spring框架进行单元测试"/>
+    <meta property="og:url" content="https://unchin.github.io/使用Spring-Test对Spring框架进行单元测试/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="用钦"/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://unchin.github.io">用钦</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="https://unchin.github.io/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">标签</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://unchin.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>使用Spring-Test对Spring框架进行单元测试</h1>
+            <span class="meta">
+            	Posted on
+              2020-03-20，6 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8spring-test%E5%AF%B9spring%E6%A1%86%E6%9E%B6%E8%BF%9B%E8%A1%8C%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95">使用Spring-Test对Spring框架进行单元测试</a>
+<ul>
+<li><a href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%E5%8A%A0%E8%BD%BD%E4%BE%9D%E8%B5%96">第一步，加载依赖</a></li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%E7%BC%96%E5%86%99springtestbase%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%89%80%E9%9C%80xml%E6%96%87%E4%BB%B6">第二步，编写SpringTestBase基础类，加载所需xml文件：</a></li>
+<li><a href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%E6%88%91%E4%BB%AC%E8%87%AA%E5%B7%B1%E7%9A%84%E6%B5%8B%E8%AF%95%E7%B1%BB">第三步，我们自己的测试类</a></li>
+</ul>
+</li>
+<li><a href="#bug%E6%80%BB%E7%BB%93">bug总结</a><br>
+*<br>
+*<br>
+* <a href="#1-%E8%BD%BD%E5%85%A5%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%A4%B1%E8%B4%A5-javalangillegalstateexception-failed-to-load-applicationcontext">1. 载入配置文件失败 <code>java.lang.IllegalStateException: Failed to load ApplicationContext</code></a><br>
+* <a href="#2-%E7%A9%BA%E6%8C%87%E9%92%88%E5%BC%82%E5%B8%B8-javalangnullpointerexception">2. 空指针异常 <code>java.lang.NullPointerException</code></a></li>
+</ul>
+</li>
+</ul>
+(使用Spring-Test对Spring框架进行单元测试)</p>
+<blockquote>
+<p>单元测试是用来对一个模块、一个函数或者一个类来进行正确性检验的测试工作。</p>
+</blockquote>
+<p>比如对函数<code>abs()，</code>我们可以编写出以下几个测试用例：<br>
+输入正数，比如<code>1、1.2、0.99</code>，期待返回值与输入相同；<br>
+输入负数，比如<code>-1、-1.2、-0.99</code>，期待返回值与输入相反；<br>
+输入<code>0</code>，期待返回<code>0</code>；输入非数值类型，比如<code>None、[]、{}</code>，期待抛出<code>TypeError</code>。</p>
+<p>把上面的测试用例放到一个测试模块里，就是一个完整的单元测试。</p>
+<p>如果单元测试通过，说明我们测试的这个函数能够正常工作。如果单元测试不通过，要么函数有bug，要么测试条件输入不正确，总之，需要修复使单元测试能够通过。</p>
+<p>单元测试通过后有什么意义呢？如果我们对<code>abs()</code>函数代码做了修改，只需要再跑一遍单元测试，如果通过，说明我们的修改不会对<code>abs()</code>函数原有的行为造成影响，如果测试不通过，说明我们的修改与原有行为不一致，要么修改代码，要么修改测试。</p>
+<p>这种以测试为驱动的开发模式最大的好处就是确保一个程序模块的行为符合我们设计的测试用例。在将来修改的时候，可以极大程度地保证该模块行为仍然是正确的。</p>
+<h2 id="使用spring-test对spring框架进行单元测试">使用Spring-Test对Spring框架进行单元测试</h2>
+<h3 id="第一步加载依赖">第一步，加载依赖</h3>
+<p>使用spring的测试框架需要加入以下依赖包：</p>
+<blockquote>
+<p>JUnit 4 （官方下载：http://www.junit.org/）</p>
+</blockquote>
+<blockquote>
+<p>Spring Test （Spring框架中的test包）</p>
+</blockquote>
+<blockquote>
+<p>Spring 相关其他依赖包（context等包）</p>
+</blockquote>
+<p>如果使用maven，在基于spring的项目中添加如下依赖：</p>
+<pre><code>        &lt;!--spring单元测试依赖 --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-test&lt;/artifactId&gt;
+            &lt;version&gt;${springframework}&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<h3 id="第二步编写springtestbase基础类加载所需xml文件">第二步，编写SpringTestBase基础类，加载所需xml文件：</h3>
+<pre><code>package com;
+
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+/**
+ * [spring测试基类]
+ *
+ * @author Steven Guo
+ * @date 2018/12/28
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { &quot;classpath:spring/applicationContext*.xml&quot;})
+//@Transactional
+public class BaseJunit4Test {
+}
+</code></pre>
+<p><strong>注解:</strong></p>
+<p><code>@RunWith</code>：用于指定junit运行环境，是junit提供给其他框架测试环境接口扩展，为了便于使用spring的依赖注入，spring提供了org.springframework.test.context.junit4.SpringJUnit4ClassRunner作为Junit测试环境</p>
+<p><code>@ContextConfiguration(locations = { &quot;classpath:spring/applicationContext*.xml&quot;})</code><br>
+导入配置文件，这里我的applicationContext配置文件是根据模块来分类的。<br>
+如果有多个模块就引入多个“applicationContext-service.xml”文件。如果所有的都是写在“applicationContext.xml”中则这样导入： <br>
+@ContextConfiguration(locations = &quot;classpath:applicationContext.xml&quot;)</p>
+<p><code>@Transactional:</code>这个非常关键，如果不加入这个注解配置，事务控制就无效，但是如果在基类中使用了这个注解，则所有继承这个基类的类都有事务控制。</p>
+<h3 id="第三步我们自己的测试类">第三步，我们自己的测试类</h3>
+<p>idea可以直接Ctrl+Shift+T快捷键自动生成，不过<strong>在生成之前先检查自己项目中有没有test文件夹，这个文件夹是与src目录同级的，并且将之mark为test目录。</strong></p>
+<figure data-type="image" tabindex="1"><img src="https://i.loli.net/2018/12/28/5c25cbdd17047.jpg" alt="1545901662(1).jpg" loading="lazy"></figure>
+<p>选择junit4，下面是自己想测试的方法，直接勾选就行。</p>
+<ul>
+<li>如果是eclipse，在类名上点右键 C&gt; New C&gt; Other ，在新建对话框中，选择Java &gt;&gt; Junit &gt;&gt; Junit Test Case，在“New Junit Test Case”对话框中，填写测试类名。点Next，将要测试的方法钩选中，Finish即行。</li>
+</ul>
+<p>生成了测试类后，直接继承BaseJunit4Test就可以对Spring框架的内容进行单元测试。</p>
+<pre><code>public class BzyStandardDevelopmentServiceTest extends BaseJunit4Test {
+
+	@Autowired
+	private BtService btService;
+
+	@Test
+	public void getBtById() {
+			BtEntity btEntity = btService.getBtById(&quot;1&quot;);
+			System.out.println(JSON.toJSONString(btEntity));
+
+	}
+}
+</code></pre>
+<hr>
+<h2 id="bug总结">bug总结</h2>
+<h5 id="1-载入配置文件失败-javalangillegalstateexception-failed-to-load-applicationcontext">1. 载入配置文件失败 <code>java.lang.IllegalStateException: Failed to load ApplicationContext</code></h5>
+<ul>
+<li><code>@ContextConfiguration</code>注解里面的内容，要根据自己配置文件的路径来写，不能盲目复制。</li>
+</ul>
+<h5 id="2-空指针异常-javalangnullpointerexception">2. 空指针异常 <code>java.lang.NullPointerException</code></h5>
+<ul>
+<li>错误日志会提示找不到spring的bean，这时候就要想想是不是配置文件的问题，后来检查，是扫描域的问题</li>
+</ul>
+<pre><code>	&lt;context:component-scan base-package=&quot;com.winflag&quot;&gt;      
+	    &lt;context:include-filter type=&quot;regex&quot; expression=&quot;com\.winflag\..*Service\..*&quot;/&gt;
+	    &lt;context:include-filter type=&quot;regex&quot; expression=&quot;com\.winflag\..*Directive\..*&quot;/&gt;
+	    &lt;context:exclude-filter type=&quot;aspectj&quot; expression=&quot;com.winflag..utils..*&quot;/&gt; 
+	    &lt;context:exclude-filter type=&quot;aspectj&quot; expression=&quot;com.winflag.core.workflow..*&quot;/&gt; 
+	&lt;/context:component-scan&gt;  
+</code></pre>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://unchin.github.io/SpringBoot与 Oauth2/">
+              <span class="post-title">
+                SpringBoot与 Oauth2&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://unchin.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span>用钦</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://unchin.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://unchin.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
