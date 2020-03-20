@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>Java编码需注意的事项 | 用钦</title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://unchin.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://unchin.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="Java编码需注意的事项 | 用钦 » Feed" href="https://unchin.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://unchin.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://unchin.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="Java编码需注意的事项"/>
+    <meta property="og:url" content="https://unchin.github.io/Java编码需注意的事项/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="用钦"/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://unchin.github.io">用钦</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">标签</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://unchin.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>Java编码需注意的事项</h1>
+            <span class="meta">
+            	Posted on
+              2020-03-20，7 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h2 id="避免随意使用静态变量">避免随意使用静态变量</h2>
+<p>当某个对象被定义为static变量所引用，那么GC通常是不会回收这个对象所占有的内存</p>
+<h2 id="使用局部变量">使用局部变量</h2>
+<p>调用方法时传递的参数以及在调用中创建的临时变量都保存在栈（Stack）中，速度较快；其他变量，如静态变量、实例变量等，都在堆（Heap）中创建，速度较慢。</p>
+<h2 id="处理好包装类型和基本类型两者的使用场所">处理好包装类型和基本类型两者的使用场所</h2>
+<p>虽然包装类型和基本类型在使用过程中是可以相互转换，但它们两者所产生的内存区域是完全不同的，基本类型数据产生和处理都在栈中处理，包装类型是对象，是在堆中产生实例。在集合类对象，有对象方面需要的处理适用包装类型，其他的处理提倡使用基本类型。</p>
+<h2 id="减少对变量的重复计算">减少对变量的重复计算</h2>
+<p>如：</p>
+<pre><code>for(int i=0;i&lt;lisst.size();i++)
+</code></pre>
+<p>应该改成</p>
+<pre><code>for(int i=0,len=list.size();i&lt;len;i++)
+</code></pre>
+<p>并且在循环中应该避免使用复杂的表达式，在循环中，循环条件会被反复计算，如果不使用复杂表达式，而使循环条件值不变的话，程序将会运行的更快。</p>
+<h2 id="在finally块中释放资源">在finally块中释放资源</h2>
+<p>程序中使用到的资源应当被释放，以避免资源泄漏，这最好在finally块中去做。不管程序执行的结果如何，finally块总是会执行的，以确保资源的正确关闭。</p>
+<h2 id="尽量采用懒加载的策略即在需要的时候才创建">尽量采用懒加载的策略，即在需要的时候才创建</h2>
+<p>例如：</p>
+<pre><code>String str = &quot;aaa&quot;;if (i == 1)
+{
+list.add(str);
+}
+</code></pre>
+<p>建议替换为：</p>
+<pre><code>if (i == 1)
+{
+String str = &quot;aaa&quot;;
+list.add(str);
+}
+</code></pre>
+<h2 id="慎用异常">慎用异常</h2>
+<p>异常对性能不利。当创建一个异常时，需要收集一个栈跟踪(stack track)，这个栈跟踪用于描述异常是在何处创建的。构建这些栈跟踪时需要为运行时栈做一份快照，正是这一部分开销很大。当需要创建一个 Exception 时，JVM 不得不说：先别动，我想就您现在的样子存一份快照，所以暂时停止入栈和出栈操作。栈跟踪不只包含运行时栈中的一两个元素，而是包含这个栈中的每一个元素。<br>
+如果创建一个 Exception ，就得付出代价，好在捕获异常开销不大，因此可以使用 try-catch 将核心内容包起来。从技术上讲，你甚至可以随意地抛出异常，而不用花费很大的代价。招致性能损失的并不是 throw 操作——尽管在没有预先创建异常的情况下就抛出异常是有点不寻常。真正要花代价的是创建异常，幸运的是，好的编程习惯已教会我们，不应该不管三七二十一就抛出异常。异常是为异常的情况而设计的，使用时也应该牢记这一原则。</p>
+<h2 id="不要在循环中使用trycatch应该把其放在最外层">不要在循环中使用try…catch…，应该把其放在最外层</h2>
+<p>Error是获取系统错误的类，或者说是虚拟机错误的类。不是所有的错误Exception都能获取到的，虚拟机报错Exception就获取不到，必须用Error获取。除非不得已。如果毫无理由地这么写了，只要你的领导资深一点、有强迫症一点，八成就要骂你为什么写出这种垃圾代码来了</p>
+<h2 id="避免使用二维数组">避免使用二维数组</h2>
+<p>二维数据占用的内存空间比一维数组多得多，大概10倍以上。</p>
+<h2 id="避免使用split">避免使用split</h2>
+<p>除非是必须的，否则应该避免使用split，split由于支持正则表达式，所以效率比较低，如果是频繁的几十，几百万的调用将会耗费大量资源，如果确实需要频繁的调用split，可以考虑使用apache的StringUtils.split(string,char)，频繁split的可以缓存结果。</p>
+<h2 id="循环内不要不断创建对象引用">循环内不要不断创建对象引用</h2>
+<p>例如：</p>
+<pre><code>for (int i = 1; i &lt;= count; i++)
+{
+Object obj = new Object();
+}
+</code></pre>
+<p>这种做法会导致内存中有count份Object对象引用存在，count很大的话，就耗费内存了，建议为改为：</p>
+<pre><code>Object obj = null;for (int i = 0; i &lt;= count; i++) { obj = new Object(); }
+</code></pre>
+<p>这样的话，内存中只有一份Object对象引用，每次new Object()的时候，Object对象引用指向不同的Object罢了，但是内存中只有一份，这样就大大节省了内存空间了。</p>
+<h2 id="尽量使用hashmap-arraylist-stringbuilder">尽量使用HashMap、ArrayList、StringBuilder</h2>
+<p>除非线程安全需要，否则不推荐使用Hashtable、Vector、StringBuffer，后三者由于使用同步机制而导致了性能开销</p>
+<h2 id="不要将数组声明为public-static-final">不要将数组声明为public static final</h2>
+<p>因为这毫无意义，这样只是定义了引用为static final，数组的内容还是可以随意改变的，将数组声明为public更是一个安全漏洞，这意味着这个数组可以被外部类所改变</p>
+<h2 id="将常量声明为static-final并以大写命名">将常量声明为static final，并以大写命名</h2>
+<p>这样在编译期间就可以把这些内容放入常量池中，避免运行期间计算生成常量的值。另外，将常量的名字以大写命名也可以方便区分出常量与变量</p>
+<h2 id="不要创建一些不使用的对象不要导入一些不使用的类">不要创建一些不使用的对象，不要导入一些不使用的类</h2>
+<p>这毫无意义，如果代码中出现”The value of the local variable i is not used”、”The import java.util is never used”，那么请删除这些无用的内容</p>
+<h2 id="程序运行过程中避免使用反射">程序运行过程中避免使用反射</h2>
+<p>关于，请参见反射。反射是Java提供给用户一个很强大的功能，功能强大往往意味着效率不高。不建议在程序运行过程中使用尤其是频繁使用反射机制，特别是Method的invoke方法，如果确实有必要，一种建议性的做法是将那些需要通过反射加载的类在项目启动的时候通过反射实例化出一个对象并放入内存—-用户只关心和对端交互的时候获取最快的响应速度，并不关心对端的项目启动花多久时间。</p>
+<h2 id="顺序插入和随机访问比较多的场景使用arraylist元素删除和中间插入比较多的场景使用linkedlist">顺序插入和随机访问比较多的场景使用ArrayList，元素删除和中间插入比较多的场景使用LinkedList</h2>
+<p>这个，理解ArrayList和LinkedList的原理就知道了</p>
+<h2 id="公用的集合类中不使用的数据一定要及时remove掉">公用的集合类中不使用的数据一定要及时remove掉</h2>
+<p>如果一个集合类是公用的（也就是说不是方法里面的属性），那么这个集合里面的元素是不会自动释放的，因为始终有引用指向它们。所以，如果公用集合里面的某些数据不使用而不去remove掉它们，那么将会造成这个公用集合不断增大，使得系统有内存泄露的隐患。</p>
+<h2 id="把一个基本数据类型转为字符串基本数据类型tostring是最快的方式-stringvalueof数据次之-数据最慢">把一个基本数据类型转为字符串，基本数据类型.toString()是最快的方式、String.valueOf(数据)次之、数据+”&quot;最慢</h2>
+<p>遇到把一个基本数据类型转为String的时候，优先考虑使用toString()方法。至于为什么，很简单：<br>
+1、String.valueOf()方法底层调用了Integer.toString()方法，但是会在调用前做空判断<br>
+2、Integer.toString()方法就不说了，直接调用了<br>
+3、i + “”底层使用了StringBuilder实现，先用append方法拼接，再用toString()方法获取字符串<br>
+三者对比下来，明显是2最快、1次之、3最慢</p>
+
+          
+        <div class="comment">
+          
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://unchin.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span>用钦</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://unchin.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://unchin.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
