@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-       <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta content="yes" name="apple-mobile-web-app-capable" />
   <meta content="black" name="apple-mobile-web-app-status-bar-style" />
@@ -9,14 +9,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="kveln">
-  <title>标签列表 | 用钦</title>
+  <title>Java基础知识整理（一） | 用钦</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://unchin.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
   <!--  <link href="https://unchin.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
   <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-  <link rel="alternate" type="application/rss+xml" title="标签列表 | 用钦 » Feed" href="https://unchin.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="Java基础知识整理（一） | 用钦 » Feed" href="https://unchin.github.io/atom.xml">
   <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
   <link href="https://unchin.github.io/styles/main.css" rel="stylesheet">
   <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -25,6 +25,11 @@
   <script>hljs.initHighlightingOnLoad();</script>
   
 
+    <meta property="og:description" content="Java基础知识整理（一）"/>
+    <meta property="og:url" content="https://unchin.github.io/Dvsk_d4pl/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="用钦"/>
   </head>
   <body>
   	<!-- Navigation -->
@@ -66,27 +71,116 @@
       </div>
     </div>
   </nav>
-<!-- Page Header -->
+  <!-- Page Header -->
   <header class="masthead" style="background-image: url('https://unchin.github.io/media/images/home-bg.jpg')">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1 class="tag-tl">Tags</h1>
+          	<span class="tags">
+          	 
+        </span>
+            <h1>Java基础知识整理（一）</h1>
+            <span class="meta">
+            	Posted on
+              2020-03-20，2 min read
+            </span>
           </div>
         </div>
       </div>
     </div>
   </header>
-  <div class="container">
-    <div class="row">
-     
-      <div class="col-lg-8 col-md-10 mx-auto">
-       
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h2 id="java数组的初始化">java数组的初始化</h2>
+<ul>
+<li>
+<p>静态初始化：直接分配数据，不需要提前开辟数组空间</p>
+</li>
+<li>
+<p>动态初始化：需要提前开辟数组空间（需要new）</p>
+</li>
+</ul>
+<h2 id="字符串string的比较">字符串String的比较</h2>
+<ul>
+<li>
+<p>==：双等于号是比较的地址</p>
+</li>
+<li>
+<p>equals：比较的是内容</p>
+</li>
+</ul>
+<h2 id="字符串常用方法">字符串常用方法</h2>
+<ol>
+<li>字符串长度：length()方法</li>
+<li>字符串转换数组：toCharArray()</li>
+<li>从字符串中取出指定位置的字符：charAt()</li>
+<li>字符串与byte数组的转换：getBytes（）</li>
+<li>过滤字符串中存在的字符：indexOf()</li>
+<li>去掉字符串的前后空格：trim()</li>
+<li>从字符串中取出子字符串：subString()</li>
+<li>大小写转换：toLowerCase() toUpperCase()</li>
+<li>判断字符串的开头结尾字符：endWith() startWith()</li>
+<li>替换String字符串中的一个字符：replace()</li>
+</ol>
+<h2 id="常见异常">常见异常</h2>
+<ol>
+<li>数组越界异常：ArrayIndexOutOfBoundsException</li>
+<li>数字格式化异常：NumberFormatException</li>
+<li>算数异常：ArithmeticException</li>
+<li>空指针异常：NullPointerException</li>
+</ol>
+<h2 id="面向对象是三大特征">面向对象是三大特征</h2>
+<ol>
+<li>封装性：对外部不可见</li>
+<li>继承：扩展类的功能</li>
+<li>多态性：方法的重载</li>
+</ol>
+<h2 id="构造方法">构造方法</h2>
+<ul>
+<li>格式：<br>
+    访问修饰符 类名称（）{<br>
+        程序语句<br>
+      }</li>
+<li>注意点：<br>
+    （1）构造方法必须与类名一致<br>
+      （2）构造方法没有返回值</li>
+</ul>
+<ol>
+<li>构造方法主要是为类中的属性初始化</li>
+<li>每个类在实例化之后都会调用构造方法，如果没有构造方法，程序在编译的时候会创建一个无参的什么都不做的构造方法。</li>
+</ol>
+<h2 id="引用传递">引用传递</h2>
+<ul>
+<li>string类型的引用传递是不可改变的</li>
+</ul>
+<h2 id="static关键字">static关键字</h2>
+<ol>
+<li>使用static声明全局属性</li>
+<li>使用static申明方法，直接通过类名调用</li>
+<li>使用static方法的时候，只能访问static声明的属性和方法，而非static声明的属性和方法是不能访问的</li>
+</ol>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://unchin.github.io/cCHTbBfYJ/">
+              <span class="post-title">
+                Java基础知识整理（二）&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+        </div>
       </div>
     </div>
-  </div>
+  </article>
  <!-- Footer -->
   <footer>
     <div class="container">
@@ -158,3 +252,4 @@
   })(this));</script>
   </body>
 </html>
+

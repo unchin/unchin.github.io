@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="referrer" content="never">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="kveln">
+  <title>docker 部署 springboot | 用钦</title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://unchin.github.io/media/css/bootstrap.min.css" rel="stylesheet"> -->
+  <!--  <link href="https://unchin.github.io/media/css/all.min.css" rel="stylesheet" type="text/css"> -->
+  <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="alternate" type="application/rss+xml" title="docker 部署 springboot | 用钦 » Feed" href="https://unchin.github.io/atom.xml">
+  <link rel="stylesheet"href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/styles/androidstudio.min.css">
+  <link href="https://unchin.github.io/styles/main.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.10/build/highlight.min.js"></script>
+  <!-- <script src="https://unchin.github.io/media/scripts/jquery.min.js"></script> -->
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+    <meta property="og:description" content="docker 部署 springboot"/>
+    <meta property="og:url" content="https://unchin.github.io/mB4f5oiBN/"/>
+    <meta property="og:locale" content="zh-CN"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="用钦"/>
+  </head>
+  <body>
+  	<!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="https://unchin.github.io">用钦</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/">首页</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/archives">归档</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/tags">标签</a>
+              
+          </li>
+          
+          <li class="nav-item">
+              
+              <a class="nav-link" href="/post/about">关于</a>
+              
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://unchin.github.io/media/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+          	<span class="tags">
+          	 
+        </span>
+            <h1>docker 部署 springboot</h1>
+            <span class="meta">
+            	Posted on
+              2020-03-20，9 min read
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <p>步骤简述</p>
+<ul>
+<li>构建一个简单的 Spring Boot 项目</li>
+<li>项目添加 Docker 支持</li>
+<li>构建打包环境
+<ul>
+<li>安装虚拟机</li>
+<li>xshell连接</li>
+<li>安装docker</li>
+<li>安装jdk</li>
+<li>安装maven</li>
+</ul>
+</li>
+<li>部署</li>
+</ul>
+<h2 id="构建一个简单的-spring-boot-项目">构建一个简单的 Spring Boot 项目</h2>
+<p>创建一个最简单的 helloworld 的spring项目，运行起来，访问端口查看是否成功。</p>
+<h2 id="项目添加-docker-支持">项目添加 Docker 支持</h2>
+<p>在 <code>pom.xml</code> 中添加 Docker 镜像名称，属性中添加好镜像名字的前缀</p>
+<pre><code>&lt;properties&gt;
+    &lt;java.version&gt;1.8&lt;/java.version&gt;
+    &lt;docker.image.prefix&gt;springboot&lt;/docker.image.prefix&gt;
+&lt;/properties&gt;
+</code></pre>
+<p>plugins 中添加 Docker 构建插件：</p>
+<pre><code>&lt;!-- Docker maven plugin --&gt;
+&lt;plugin&gt;
+    &lt;groupId&gt;com.spotify&lt;/groupId&gt;
+    &lt;artifactId&gt;docker-maven-plugin&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;imageName&gt;${docker.image.prefix}/${project.artifactId}&lt;/imageName&gt;
+        &lt;dockerDirectory&gt;src/main/docker&lt;/dockerDirectory&gt;
+        &lt;resources&gt;
+            &lt;resource&gt;
+                &lt;targetPath&gt;/&lt;/targetPath&gt;
+                &lt;directory&gt;${project.build.directory}&lt;/directory&gt;
+                &lt;include&gt;${project.build.finalName}.jar&lt;/include&gt;
+            &lt;/resource&gt;
+        &lt;/resources&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;
+</code></pre>
+<p>在目录src/main/docker下创建 Dockerfile 文件，Dockerfile 文件用来说明如何来构建镜像。</p>
+<pre><code>FROM openjdk:8-jdk-alpine
+VOLUME /tmp
+ADD hello-docker-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT [&quot;java&quot;,&quot;-Djava.security.egd=file:/dev/./urandom&quot;,&quot;-jar&quot;,&quot;/app.jar&quot;]
+</code></pre>
+<p>这个 Dockerfile 文件很简单，构建 Jdk 基础环境，添加 Spring Boot Jar 到镜像中，简单解释一下:</p>
+<ul>
+<li>FROM ，表示使用 Jdk8 环境 为基础镜像，如果镜像不是本地的会从 DockerHub 进行下载</li>
+<li>VOLUME ，VOLUME 指向了一个<code>/tmp</code>的目录，由于 Spring Boot 使用内置的Tomcat容器，Tomcat 默认使用<code>/tmp</code>作为工作目录。这个命令的效果是：在宿主机的<code>/var/lib/docker</code>目录下创建一个临时文件并把它链接到容器中的<code>/tmp</code>目录</li>
+<li>ADD ，拷贝文件并且重命名</li>
+<li>ENTRYPOINT ，为了缩短 Tomcat 的启动时间，添加<code>java.security.egd</code>的系统属性指向<code>/dev/urandom</code>作为 ENTRYPOINT</li>
+</ul>
+<blockquote>
+<p>注意：上面的这个<code>ADD</code>中的项目名（hello-docker）和版本号（0.0.1-SNAPSHOT<br>
+）一定要与 pom 文件中的一致</p>
+</blockquote>
+<h2 id="构建打包环境">构建打包环境</h2>
+<p>在 Windows 搭建 Docker 环境很麻烦，但是目前这边所能提供到的服务器环境只有 Windows，所以即使是麻烦也要折腾。</p>
+<p>有三种方式实现 docker：</p>
+<ul>
+<li>一种是使用 docker tools，它的原理其实就是在 Windows上安装一个虚拟机，里面跑 linux，然后跑docker。</li>
+<li>一种是把 Windows 升级到 win10或者win server 2019或者以上</li>
+<li>最后一种是使用虚拟机安装 linux，然后再装 docker</li>
+</ul>
+<p>这些方法我都试过了，第一种方法的 docker版本比较旧，并且 docker tool已经被遗弃，后期要是出现问题，确实比较麻烦。<br>
+第二种方法是官方的推荐模式，不过在我用一段时间后，发现出现了 bug，去网上查资料几乎没有 Windows版本的docker解决方案，导致搁浅进度。</p>
+<p>所以，最后决定，用第三种方案。</p>
+<h3 id="安装虚拟机">安装虚拟机</h3>
+<p>安装vmware并激活</p>
+<h4 id="网络设置">网络设置</h4>
+<p>首先是网络设置，可以先<code>ip addr</code> 试一试，一般来说，现在是没有网卡和网络 ip 的。</p>
+<p>在 CentOS 6 中， 网络设置及静态IP配置在 <code>/etc/sysconfig/network-scripts/ifcfg-eth0</code> 文件中配置，CentOS 7 网卡命令规则变化，命名规则根据系统固件和硬件来命名为 <code>ifcfg-en*</code> 类型，只有新的命名规则找不到的情况下才使用类似 eth0 这样的样式（系统之所以做出这样的改变肯定是有利于兼容硬件，感兴趣的可以自己深入了解，这里不做展开，我的电脑网卡是 <code>/etc/sysconfig/network-scripts/ifcfg-enp33</code>） ，使用 <code>vi /etc/sysconfig/network-scripts/ifcfg-enp33</code> 打开这个文件(最小安装默认只有 vi 而没有 vim )，修改如下内容：</p>
+<pre><code>BOOTPROTO=dhcp #保持默认的dhcp，dhcp会在联网之后自动获取到IP，dhcp获取的ip地址可能会因为网络重连发生变化 
+ONBOOT=yes #开启自动启用网络连接 
+DNS1=8.8.8.8 #第一个dns服务器，可设置多个，不指定也可以 
+# 8.8.8.8 是Google提供的一个免费DNS服务器ip
+</code></pre>
+<p><code>:wq</code> 保存退出之后，<code>service network restart</code>重启，网络已经启用了；</p>
+<h3 id="xshell连接">xshell连接</h3>
+<ol>
+<li><code>ip addr</code>找到IP，输入账号密码就可连接了。</li>
+<li>安装文件传输功能</li>
+</ol>
+<p>yum 安装。</p>
+<pre><code>yum install  lrzsz -y
+</code></pre>
+<p>检查是否安装成功。</p>
+<pre><code>rpm -qa |grep lrzsz
+</code></pre>
+<p>上传文件的执行命令：</p>
+<pre><code>rz
+</code></pre>
+<p>就会打开本地选择文件对话框，选择文件，确定就可以上传到当前所在目录。</p>
+<p>如果覆盖原文件，执行：</p>
+<pre><code>rz   -y
+</code></pre>
+<p>下载文件，执行：</p>
+<pre><code>sz
+</code></pre>
+<p>弹出选择本地保存文件对话框。</p>
+<blockquote>
+<p>这里也可以选择 Xftp 来实现文件传输，这是一个相当强大的软件。</p>
+</blockquote>
+<h3 id="安装-docker">安装 docker</h3>
+<p>安装</p>
+<pre><code>yum install docker
+</code></pre>
+<p>安装完成后，使用下面的命令来启动 docker 服务，并将其设置为开机启动：</p>
+<pre><code>systemctl  start docker.service
+systemctl  enable docker.service
+</code></pre>
+<p>使用Docker 中国加速器，这一步很重要</p>
+<pre><code>vi  /etc/docker/daemon.json
+
+#添加后：{
+    &quot;registry-mirrors&quot;: [&quot;https://registry.docker-cn.com&quot;],
+    &quot;live-restore&quot;: true
+    }
+</code></pre>
+<p>重新启动</p>
+<pre><code>docker systemctl restart docker
+</code></pre>
+<p>输入<code>docker version</code> 返回版本信息则安装正常。</p>
+<h3 id="安装jdk">安装JDK</h3>
+<pre><code>yum -y install java-1.8.0-openjdk*
+</code></pre>
+<p>配置环境变量 打开<code>vim /etc/profile</code> 添加一下内容</p>
+<pre><code>export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.242.b08-0.el7_7.x86_64 
+export PATH=$PATH:$JAVA_HOME/bin 
+</code></pre>
+<p>修改完成之后，使其生效`</p>
+<pre><code>source /etc/profile`
+</code></pre>
+<p>输入<code>java -version</code> 返回版本信息则安装正常。</p>
+<h3 id="安装maven">安装MAVEN</h3>
+<p>下载：http://mirrors.shu.edu.cn/apache/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz</p>
+<pre><code>## 解压tar vxf apache-maven-3.6.3-bin.tar.gz
+## 移动mv apache-maven-3.6.3 /usr/local/maven3
+</code></pre>
+<p>创建软连接</p>
+<pre><code>ln -s apache-maven-3.6.3 maven
+</code></pre>
+<p>修改环境变量， 在<code>/etc/profile中</code>添加以下几行</p>
+<pre><code>MAVEN_HOME=/usr/local/maven
+export MAVEN_HOME
+export PATH=${PATH}:${MAVEN_HOME}/bin
+</code></pre>
+<p>记得执行<code>source /etc/profile</code>使环境变量生效。</p>
+<p>输入<code>mvn -version</code> 返回版本信息则安装正常。这样整个构建环境就配置完成了。</p>
+<h2 id="使用-docker-部署-spring-boot-项目">使用 Docker 部署 Spring Boot 项目</h2>
+<p>项目拷贝服务器中，进入项目路径下进行打包测试。</p>
+<pre><code>#打包
+mvn package
+</code></pre>
+<p>接下来我们使用 DockerFile 构建镜像。</p>
+<pre><code>mvn package docker:build
+</code></pre>
+<p>第一次构建可能有点慢，当看到以下内容的时候表明构建成功：</p>
+<pre><code>...
+Step 1 : FROM openjdk:8-jdk-alpine
+ ---&gt; 224765a6bdbe
+Step 2 : VOLUME /tmp
+ ---&gt; Using cache
+ ---&gt; b4e86cc8654e
+Step 3 : ADD spring-boot-docker-1.0.jar app.jar
+ ---&gt; a20fe75963ab
+Removing intermediate container 593ee5e1ea51
+Step 4 : ENTRYPOINT java -Djava.security.egd=file:/dev/./urandom -jar /app.jar
+ ---&gt; Running in 85d558a10cd4
+ ---&gt; 7102f08b5e95
+Removing intermediate container 85d558a10cd4
+Successfully built 7102f08b5e95
+[INFO] Built springboot/spring-boot-docker
+[INFO] ------------------------------------------------------------------------[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------[INFO] Total time: 54.346 s
+[INFO] Finished at: 2020-03-03T16:20:15+08:00
+[INFO] Final Memory: 42M/182M
+[INFO] ------------------------------------------------------------------------
+</code></pre>
+<p>使用docker images命令查看构建好的镜像：</p>
+<pre><code>docker images
+REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
+springboot/spring-boot-docker   latest              99ce9468da74        6 seconds ago       117.5 MB
+</code></pre>
+<p>springboot/spring-boot-docker 就是我们构建好的镜像，下一步就是运行该镜像</p>
+<pre><code>docker run -p 8080:8080 -t springboot/spring-boot-docker
+</code></pre>
+<p>启动完成之后我们使用docker ps查看正在运行的镜像：</p>
+<pre><code>docker ps
+CONTAINER ID        IMAGE                           COMMAND                  CREATED             STATUS              PORTS                    NAMES
+049570da86a9        springboot/spring-boot-docker   &quot;java -Djava.security&quot;   30 seconds ago      Up 27 seconds       0.0.0.0:8080-&gt;8080/tcp   determined_mahavira
+</code></pre>
+<p>可以看到我们构建的容器正在在运行，访问浏览器：<code>http://192.168.0.x:8080/</code>,返回Hello Docker!</p>
+<p>说明使用 Docker 部署 Spring Boot 项目成功！</p>
+<p>以上这个是最基本的 dockerfile 部署的方法，在掌握了这个方法之后，还有其他部署方法：</p>
+<ol>
+<li>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzI1NDY0MTkzNQ==&amp;mid=2247486891&amp;idx=1&amp;sn=99fd793e3f1ac05898aceec052336120&amp;chksm=e9c35fcbdeb4d6dde353c49929ed64157e7c83f737166192cef134ac5e8883d53d8326a38e78&amp;mpshare=1&amp;scene=1&amp;srcid=&amp;sharer_sharetime=1573131989225&amp;sharer_shareid=a0bb45905ea4078e53ce8303a91a1eab#rd">别用 Dockerfile 部署 Spring Boot ，利用 dockerhub云部署</a></p>
+</li>
+<li>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU1Nzg4NjgyMw==&amp;mid=2247484270&amp;idx=1&amp;sn=92bc35f7568e061059e58af919e75bde&amp;chksm=fc2fbf66cb5836703713c6da2258704fe3a1adc5f643e0150c545236ec3d6c87385dbc5c2e4a&amp;scene=0&amp;xtrack=1&amp;key=cd46a5853d370dc7eff9079f8bc5f8d7df9f9e38ec88b95f6232aa663db45ef6e28dd25f63754b22071b4715fa7871a066109594ad5d2f7f5a235b924105bf51270b9c4333267a5168da39f1176de23d&amp;ascene=1&amp;uin=MTQwMDgyNjc4MQ%3D%3D&amp;devicetype=Windows+10&amp;version=62070158&amp;lang=zh_CN&amp;exportkey=AfYo5g36H4LpR%2FWFUtmAGm0%3D&amp;pass_ticket=HaGajqRlyct9GSmKgMOR1qQbx%2B7dhCz6Oo4YGekdHf8oT0bTHc%2BA544QtA1mKEVh">使用Jenkins一键打包部署SpringBoot应用</a></p>
+</li>
+</ol>
+<h2 id="遇到的问题">遇到的问题</h2>
+<ol>
+<li>
+<p><a href="https://www.cnblogs.com/dotama/p/10974641.html">Linux下安装maven, mvn -v报错: JAVA_HOME should point to a JDK not a JRE</a></p>
+</li>
+<li>
+<p><a href="https://blog.csdn.net/fengasdfgh/article/details/60135290?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task">Xshell连接不上虚拟机的问题和解决办法</a></p>
+</li>
+<li>
+<p><a href="https://blog.csdn.net/fragrant_no1/article/details/84326155?depth_1-utm_source=distribute.pc_relevant.none-task&amp;utm_source=distribute.pc_relevant.none-task">构建项目失败解决方案</a></p>
+</li>
+</ol>
+
+          
+          <p class="next-post">下一篇：
+            <a href="https://unchin.github.io/GeHi2l7y7/">
+              <span class="post-title">
+                Spring Cloud&rarr;
+              </span>
+            </a>
+          </p>
+        
+        <div class="comment">
+          
+        </div>
+      </div>
+    </div>
+  </article>
+ <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+              <li class="list-inline-item">
+              <a href="https://unchin.github.io/atom.xml" target="_blank">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+              </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy;<span>用钦</span><br><a href="https://github.com/getgridea/gridea" class="Themeinfo">Powered by Gridea</a></p>
+        </div>
+      </div>
+    </div>
+   </footer>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://unchin.github.io/media/scripts/bootstrap.bundle.min.js"></script> -->
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://cdn.jsdelivr.net/gh/Alanrk/clean-cdn@1.0/scripts/clean-blog.min.js"></script>
+  <!-- <script src="https://unchin.github.io/media/scripts/clean-blog.min.js"></script> -->
+  <script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+  <style type="text/css">a.back_to_top{text-decoration:none;position:fixed;bottom:40px;right:30px;background:#f0f0f0;height:40px;width:40px;border-radius:50%;line-height:36px;font-size:18px;text-align:center;transition-duration:.5s;transition-propety:background-color;display:none}a.back_to_top span{color:#888}a.back_to_top:hover{cursor:pointer;background:#dfdfdf}a.back_to_top:hover span{color:#555}@media print,screen and(max-width:580px){.back_to_top{display:none!important}}</style>
+<a id="back_to_top" href="#" class="back_to_top">
+  <span>▲</span></a>
+<script>$(document).ready((function(_this) {
+    return function() {
+      var bt;
+      bt = $('#back_to_top');
+      if ($(document).width() > 480) {
+        $(window).scroll(function() {
+          var st;
+          st = $(window).scrollTop();
+          if (st > 30) {
+            return bt.css('display', 'block')
+          } else {
+            return bt.css('display', 'none')
+          }
+        });
+        return bt.click(function() {
+          $('body,html').animate({
+            scrollTop: 0
+          },
+          800);
+          return false
+        })
+      }
+    }
+  })(this));</script>
+  </body>
+</html>
+
